@@ -1,0 +1,182 @@
+.card-body-ds{
+  padding: 0.75rem;
+}
+.escritorio{
+  display: block;
+}
+.movil{
+  display: none;
+}
+
+.conten-large{
+  white-space: normal;
+}
+.atras{
+  padding-bottom: 10px;
+}
+.atras button {
+  border          : #00223c solid 0px;
+  border-radius   : 4px;
+  background-color: #cdcdcd;
+  padding         : 8px 15px;
+}
+
+.ticket-desc {
+  width: 500px;
+}
+
+.ticket-desc p {
+  font-weight: 600;
+  font-size  : 16px;
+}
+
+.ticket-desc small {
+  width  : 400px;
+  display: block;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.alert {
+  padding: 1.25rem 1.25rem;
+}
+
+.abajo {
+  //background-color: aqua;
+  //visibility: hidden;
+  //display: none;
+  //opacity: 0;
+}
+
+.table-cel-xl {
+  display: block;
+  padding: 5px;
+  margin : 0 auto;
+}
+
+.text-xs {
+  padding: 0rem 0.3rem;
+  width  : 30px
+}
+
+.text-s {
+  padding: 0rem 0.3rem;
+  width  : 40px
+}
+
+.cuerpoBody {
+  // margin-top: 100px;
+  // margin-bottom: 50px;  
+  margin-left : auto;
+  margin-right: auto;
+}
+
+.enviar-1 {
+  padding-top: 10px;
+}
+
+.enviar {
+  float: right;
+}
+.evaluados{
+  color: black;
+}
+.chart-1{
+  background-color: rgba(237, 237, 237, 0.8);
+}
+.reporteMovil{
+  padding: 0 20px;
+}
+
+.preguntas {
+  margin-left : auto;
+  margin-right: auto;
+}
+
+.estrellas button {
+  margin     : 0 15px;
+  //font-size: 35px;
+}
+
+.foot {
+  padding: 10px 10px 0px 10px;
+}
+
+.pagination {
+  float: left;
+}
+
+.pages {
+  float         : right;
+  display       : flex;
+  flex-direction: row;
+}
+
+.pages p {
+  margin-bottom: 0rem;
+}
+
+.pages .de {
+  display    : flex;
+  align-items: center;
+}
+
+.pagination-previous {
+  float      : left;
+  display    : flex;
+  align-items: center;
+}
+
+.pagination-previous button {
+  border          : #00223c solid 0px;
+  border-radius   : 4px;
+  background-color: #cdcdcd;
+  padding         : 7px 12px;
+}
+
+.pagination-next {
+  float      : left;
+  margin-left: 5px;
+  display    : flex;
+  align-items: center;
+}
+
+.pagination-next button {
+  border          : #00223c solid 0px;
+  border-radius   : 4px;
+  background-color: #cdcdcd;
+  padding         : 7px 12px;
+}
+
+@media only screen and (max-width: 750px) {
+  .escritorio{
+    display: none;
+  }
+  .movil{
+    display: block;
+  }
+
+}
+@media only screen and (max-width: 400px) {
+  .reporteMovil{
+    padding: 15px 20px;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+/*@media (max-width: 374px) {
+  .abajo {
+    //display: block;
+    //visibility: visible;
+    opacity: 1;
+  }
+  .table-cel-xl {
+    display: block;
+  }
+  
+  .table-compu {
+    display: none;
+  }
+}*/

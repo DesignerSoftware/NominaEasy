@@ -1,0 +1,25 @@
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb bg-light">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+            <h5 class="font-medium text-uppercase mb-0 mt-2 mt-md-0">{{pageInfo?.title}}</h5>
+        </div>
+        <div class="col-lg-9 col-md-8 col-xs-12 align-self-center text-left text-md-right">
+            <nav aria-label="breadcrumb" class="d-inline-block">
+                <ol class="breadcrumb">
+                    <ng-template ngFor let-url [ngForOf]="pageInfo?.urls" let-last="last">
+                        <li class="breadcrumb-item" *ngIf="!last" [routerLink]="url.url">
+                            <a href='javascript:void(0)'>{{url.title}}</a>
+                        </li>
+                        <li class="breadcrumb-item active" *ngIf="last">{{url.title}}</li>
+                    </ng-template>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->

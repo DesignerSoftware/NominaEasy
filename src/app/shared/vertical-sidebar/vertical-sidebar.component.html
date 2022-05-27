@@ -1,0 +1,90 @@
+<nav class="sidebar-nav">
+    <ul id="sidebarnav">
+        <!-- User Profile-->
+        <li class="sidebar-item">
+            <a class="sidebar-link has-arrow waves-effect waves-dark profile-dd" href="javascript:void(0)"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" (click)="isCollapsed =
+                !isCollapsed">
+                <img src="assets/images/users/1.jpg" class="rounded-circle mr-2" width="30">
+                <span class="hide-menu">Steve Jection </span>
+            </a>
+            <ul id="collapseExample" [ngbCollapse]="isCollapsed">
+                <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="ti-user"></i>
+                        <span class="hide-menu"> My Profile </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="ti-wallet"></i>
+                        <span class="hide-menu"> My Balance </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="ti-email"></i>
+                        <span class="hide-menu"> Inbox </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="ti-settings"></i>
+                        <span class="hide-menu"> Account Setting </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="javascript:void(0)" class="sidebar-link">
+                        <i class="fas fa-power-off"></i>
+                        <span class="hide-menu"> Logout </span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- First level menu -->
+        <li class="sidebar-item" [class.selected]="showMenu === sidebarnavItem.title"
+            *ngFor="let sidebarnavItem of sidebarnavItems"
+            (click)="sidebarnavItem.submenu.length != 0 ? '' : handleNotify()"
+            [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">
+            <div class="nav-small-cap" *ngIf="sidebarnavItem.extralink === true"></div>
+            <a class="sidebar-link waves-effect waves-dark"
+                [routerLink]="sidebarnavItem.class === '' ? [sidebarnavItem.path] : null"
+                [ngClass]="[sidebarnavItem.class]" *ngIf="!sidebarnavItem.extralink;"
+                (click)="addExpandClass(sidebarnavItem.title)"
+                [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">
+                <i [ngClass]="[sidebarnavItem.icon]"></i>
+                <span class="hide-menu">{{sidebarnavItem.title | translate}}</span>
+            </a>
+            <!-- Second level menu -->
+            <ul aria-expanded="false" class="collapse first-level" *ngIf="sidebarnavItem.submenu.length > 0"
+                [ngClass]="{'in' : showMenu === sidebarnavItem.title }">
+                <li class="sidebar-item" *ngFor="let sidebarnavSubItem of sidebarnavItem.submenu"
+                (click)="sidebarnavSubItem.submenu.length != 0 ? '' : handleNotify()"
+                    [class.active]="showSubMenu === sidebarnavSubItem.title"
+                    [routerLinkActive]="sidebarnavSubItem.submenu.length > 0 ? '' : 'active'">
+                    <a class="sidebar-link"
+                        [routerLink]="sidebarnavSubItem.submenu.length > 0 ? null : [sidebarnavSubItem.path]"
+                        [routerLinkActive]="sidebarnavSubItem.submenu.length > 0 ? '' : 'router-link-active'"
+                        [ngClass]="[sidebarnavSubItem.class]" *ngIf="!sidebarnavSubItem.extralink;"
+                        (click)="addActiveClass(sidebarnavSubItem.title)">
+                        <i [ngClass]="[sidebarnavSubItem.icon]"></i>
+                        <span class="hide-menu">{{sidebarnavSubItem.title  | translate}}</span>
+                    </a>
+                    <!-- Third level menu -->
+                    <ul aria-expanded="false" class="collapse Second-level" *ngIf="sidebarnavSubItem.submenu.length > 0"
+                        [ngClass]="{'in' : showSubMenu === sidebarnavSubItem.title }">
+                        <li class="sidebar-item" *ngFor="let sidebarnavSubsubItem of sidebarnavSubItem.submenu"
+                            routerLinkActive="active" [ngClass]="[sidebarnavSubsubItem.class]">
+                            <a class="sidebar-link" [routerLink]="[sidebarnavSubsubItem.path]"
+                                *ngIf="!sidebarnavSubsubItem.extralink;"
+                                [routerLinkActive]="sidebarnavSubsubItem.submenu.length > 0 ? '' : 'router-link-active'">
+                                <i [ngClass]="[sidebarnavSubsubItem.icon]"></i>
+                                <span class="hide-menu">{{sidebarnavSubsubItem.title  | translate}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

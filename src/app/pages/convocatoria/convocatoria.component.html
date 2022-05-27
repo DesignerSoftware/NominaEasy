@@ -1,0 +1,442 @@
+<div class="atras movil">
+  <button (click)="previusScreen();" *ngIf="posConvos == 0 && (posEvaluados != 0 || posPruebas != 0) "><i
+      class="fas fa-arrow-left"></i></button>
+</div>
+<!-- <button (click)='animacionFormu();'>Hola Mundo</button>
+<button (click)='cambioEstado();'>Cambio estado</button> -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <!-- CONVOCATORIAS -->
+      <div id="convocatoria">
+        <!-- PANTALLA DE ESCRITORIO -->
+        <div class="escritorio">
+          <div class="card-body">
+            <div class="row">
+              <!-- Column -->
+              <div class="col-md-6 col-lg-3 col-xlg-3" *ngFor='let convo of convocatoriaList'>
+                <div class="card card-hover">
+                  Escritorio
+                  <div class="box bg-warning cursor-pointer text-center" (click)="cargarEvaluados(convo.secuencia)">
+                    <h1 class="font-light text-white">{{convo.evaluados}}</h1>
+                    <h6 class="text-white">{{convo.codigo}}</h6>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Column -->
+            </div>
+          </div>
+        </div>
+        <!-- PANTALLA DE MÓVIL -->
+        <div class="movil" *ngIf="posConvos == 1 && posEvaluados == 0 && posPruebas == 0"
+          [@animacionFormulario]='cambioFormu'>
+          <div [@animacionBackFormulario]='cambioBackFormu'>
+            <div class="card-body">
+              <div class="row">
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3" *ngFor='let convo of convocatoriaList'>
+                  <div class="card card-hover">
+                    Movil
+                    <div class="box bg-warning cursor-pointer text-center" (click)="cargarEvaluados(convo.secuencia)">
+                      <h1 class="font-light text-white">{{convo.evaluados}}</h1>
+                      <h6 class="text-white">{{convo.codigo}}</h6>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Column -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- EMPLEADOS -->
+      <div id="empleados1">
+        <!-- PANTALLA DE ESCRITORIO -->
+        <div class="escritorio" id="empleados">
+          Escritorio
+          <div class="card-body" #empleados>
+            <h2>Empleados</h2>
+            <div class="row mb-4">
+              <div class="col-md-6 col-lg-3 col-xl-2">
+                <input type="text" class="form-control form-control-lg" type="text" name="search"
+                  [(ngModel)]='searchTerm' autocomplete="off" placeholder="Buscar...">
+              </div>
+            </div>
+            <div class="table-responsive" style="width: 90%; margin: 0 auto;" *ngIf='filterTickets.length !== 0'>
+              <table class="table mb-0 no-wrap v-middle table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-center" scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th class="text-center" scope="col">Puntaje</th>
+                    <th class="text-center" colspan="3" scope="col">
+                      <p class="d-none d-sm-block">
+                        Reportes
+                      </p>
+                    </th>
+                  </tr>
+                </thead>
+                <!--
+            d-none d-sm-block -- escritorio
+            d-block d-sm-none -- movil 
+            -->
+                <tbody
+                  *ngFor='let ticket of filterTickets|slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i;'>
+
+                  <tr (click)="cargarPrueba(ticket.secuencia);" class="link">
+                    <td scope="row" width="50" class="text-center">{{i+1}}</td>
+                    <td class="conten-large">
+                      <p class="mb-1">
+                        <ngb-highlight [result]="ticket.nombrePersona" [term]="searchTerm"></ngb-highlight>
+                      </p>
+                    </td>
+                    <td class="text-center" width="50">{{ticket.puntajeObtenido}}</td>
+
+                    <td class="text-center table-compu"><small><b>Resumido</b></small><br>
+                      <button type="button" class="btn btn-sm btn-success"><i class="fas fa-download"></i></button>
+                    </td>
+                    <td class="text-center table-compu"><small><b>Consolidado</b></small><br>
+                      <button type="button" class="btn btn-sm btn-success"><i class="fas fa-download"></i></button>
+                    </td>
+                    <td class="text-center table-compu"><small><b>Evaluador</b></small><br>
+                      <button type="button" class="btn btn-sm btn-success"><i class="fas fa-download"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-center mt-1">
+              <ngb-pagination [collectionSize]="filterTickets.length" [(page)]="page" [pageSize]="pageSize">
+                <ng-template ngbPaginationPages let-page let-pages="pages">
+                </ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+        <!-- PANTALLA DE MOVIL -->
+        <div class="movil" *ngIf="posConvos == 0 && posEvaluados == 1 && posPruebas == 0"
+          [@animacionFormulario]='cambioFormu'>
+          <div [@animacionBackFormulario]='cambioBackFormu'>
+            Movil
+            <div class="card-body" #empleados>
+              <h2>Empleados</h2>
+              <div class="row mb-4">
+                <div class="col-md-6 col-lg-3 col-xl-2">
+                  <input type="text" class="form-control form-control-lg" type="text" name="search"
+                    [(ngModel)]='searchTerm' autocomplete="off" placeholder="Buscar...">
+                </div>
+              </div>
+              <div style="width: 90%; margin: 0 auto;" *ngIf='filterTickets.length !== 0'>
+                <div *ngFor='let ticket of filterTickets; index as i;'>
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12 ">
+                      <div class="card border-left border-info chart-1">
+                        <div class="card-body-ds">
+                          <div class="d-flex no-block align-items-center">
+                            <div class="evaluadoMovil col-lg-8 col-md-8 col-8"
+                              (click)="cargarPrueba(ticket.secuencia);">
+                              <h5 class="evaluados">
+                                <ngb-highlight [result]="ticket.nombrePersona" [term]="searchTerm"></ngb-highlight>
+                              </h5>
+                              <h6 class="text-info">Puntaje: {{ticket.puntajeObtenido}}</h6>
+                            </div>
+                            <div class="ml-auto">
+                              <div class="">
+                                <span class="text-info display-6"
+                                  (click)="cargarReportes(ticket);openModal(reportesMovil);">
+                                  <i class="ti-notepad"></i>
+                                </span>
+                              </div>
+                              <div>
+                                <small>Reportes</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PRUEBAS -->
+
+<div id="pruebas">
+  <!-- PANTALLA DE ESCRITORIO -->
+  <div class="escritorio" id="pruebas-1">
+    Escritorio
+    <div class="row" *ngIf='filterPruebas.length !== 0'>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive" style="width: 90%; margin: 0 auto;">
+              <table class="table mb-0 no-wrap v-middle table-hover">
+                <thead class="">
+                  <tr>
+                    <th class="text-center" scope="col">#</th>
+                    <th scope="col">Nombre Prueba</th>
+                    <th class="text-center" scope="col">Factor</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="">
+                  <tr *ngFor='let Prueba of filterPruebas; index as i;' class="link">
+                    <td class="text-center" width="10%" scope="col">{{i+1}}</td>
+                    <td width="70%" class="conten-large">
+                      {{Prueba.prueba | slice:0:200 }}... <br />
+                      <!-- <small *ngIf="Prueba.obsEvaluador==null || Prueba.obsEvaluador==''">No Aplica</small> -->
+                      <small><b>Obs:</b> {{Prueba.obsEvaluador || 'No Aplica' | slice:0:29 }}...</small>
+                    </td>
+                    <td class="text-center" width="10%" scope="col">{{Prueba.factor}}</td>
+                    <td width="10%"><button type="button" class="btn btn-info"
+                        (click)="cargarPreguntas(Prueba.secPrueba, Prueba.secuencia);cargarRespuestas(Prueba.secPrueba, Prueba.secuencia);openModal(convocatoriaEvaliar, Prueba.Id);">Evaluar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PANTALLA DE MOVIL -->
+<div class="movil" *ngIf="posConvos == 0 && posEvaluados == 0 && posPruebas == 1" [@animacionFormulario]='cambioFormu'>
+  <div [@animacionBackFormulario]='cambioBackFormu'>
+    Movil
+    <div class="row" *ngIf='filterPruebas.length !== 0'>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h3>Pruebas</h3>
+            <div class="card border-left border-info chart-1" *ngFor='let Prueba of filterPruebas; index as i;'>
+              <div class="card-body-ds">
+                <div class="d-flex no-block align-items-center">
+                  <div class="evaluadoMovil col-lg-8 col-md-8 col-8">
+                    <h6>{{Prueba.prueba | slice:0:50 }}... </h6>
+                    <!-- <small *ngIf="Prueba.obsEvaluador==null || Prueba.obsEvaluador==''">No Aplica</small> -->
+                    <small><b>Obs:</b> {{Prueba.obsEvaluador || 'No Aplica' | slice:0:20 }}...</small><br>
+                    <small><b>Factor:</b> {{Prueba.factor || 'No Aplica' | slice:0:20 }}...</small>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1" [(ngModel)]="estadoPrueba">
+                      <label class="custom-control-label" for="customSwitch1"><small *ngIf='estadoPrueba==true'>Activo</small><small *ngIf='estadoPrueba==false'>Inactivo</small></label>
+                    </div>
+                  </div>
+                  <div class="ml-auto">
+                    <div class="" >
+                      <span class="text-info display-6">
+                        <i class="far fa-check-square" *ngIf='estadoPrueba==true'></i>
+                      </span>
+                    </div>
+                    <div class="" (click)="cargarPreguntas(Prueba.secPrueba, Prueba.secuencia);cargarRespuestas(Prueba.secPrueba, Prueba.secuencia);openModal(convocatoriaEvaliar, Prueba.Id);">
+                      <span class="text-info display-6">
+                        <i class="far fa-square" *ngIf='estadoPrueba==false'></i>
+                      </span>
+                    </div>
+                    <div>
+                      <small>Evaluación</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #convocatoriaEvaliar let-modal>
+
+  <div class="modal-header">
+
+    <h5 class="modal-title" id="editUserLabel">Evaluar</h5>
+
+    <button type="button" class="close" (click)="closeBtnClick()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+
+  <div class="modal-body">
+    <div class="card"
+      *ngIf='filterRespuestas.length == 0 || filterPreguntas.length == 0 || respuestaSelec.length == 0'>
+      <div class="text-center">
+        <div class="spinner-border text-primary2" style="width: 5rem; height: 5rem;" role="status"></div>
+        <div style="font-size: 2rem;">
+          Cargando...
+        </div>
+      </div>
+    </div>
+    <div class="card"
+      *ngIf='filterRespuestas.length != 0 && filterPreguntas.length != 0 && respuestaSelec.length != 0'>
+      <!-- <div [@animacionPreg]='cambio' class="text-center cuerpoBody" role="alert"
+        *ngFor='let preguntas of filterPreguntas | slice: (pagePregunta-1) * pageSizePregunta : (pagePregunta-1) * pageSizePregunta + pageSizePregunta;'> -->
+      <div [@animacionPreg]='cambio' class="text-center cuerpoBody" role="alert"
+        *ngFor='let preguntas of filterPreguntas | paginate: {  itemsPerPage: pageSizePregunta, currentPage: pagePregunta, id: "second" } ; index as i;'>
+        <div class="pruebas">
+          <div>
+            <h2>{{preguntas.consecutivo}}.</h2>
+            <p class="h3">
+              {{preguntas.descripcion}}
+            </p>
+          </div>
+          <div class="row">
+            <div class="row preguntas">
+              <div class="" *ngFor='let respuestas of filterRespuestas; index as j '>
+                <div *ngFor='let rtaSelect of respuestaSelec; index as k '>
+                  <div class="estrellas" *ngIf='respuestas.evalPreguntas.secuencia == preguntas.secuencia && rtaSelect["secPregunta"]==preguntas.secuencia
+                    && rtaSelect["indagacion"]==secIndagacion'>
+                    <!--{{preguntas.secuencia}}
+                    <br>
+                    {{respuestas.secuencia}}
+                    <br>-->
+                    <button type="button"
+                      (click)="seleccionRes(rtaSelect.indagacion, preguntas.secuencia, respuestas.secuencia);"
+                      *ngIf='rtaSelect["secRespuesta"]!=respuestas.secuencia || rtaSelect["secPregunta"]!=preguntas.secuencia'
+                      class="btn btn-outline-primary2">{{respuestas.cuantitativo}}</button>
+                    <button type="button"
+                      (click)="seleccionRes(rtaSelect.indagacion, preguntas.secuencia, respuestas.secuencia);"
+                      *ngIf='rtaSelect["secRespuesta"]==respuestas.secuencia && rtaSelect["secPregunta"]==preguntas.secuencia'
+                      class="btn btn-primary2">{{respuestas.cuantitativo}}</button>
+                    <!-- <i class="far fa-star" (mouseover)="conStar(respuestas.secuencia);"
+                    id="conStar{{respuestas.secuencia}}"></i>
+                  <i class="fas fa-star" (mouseout)="sinStar(respuestas.secuencia);"
+                    id="sinStar{{respuestas.secuencia}}" hidden></i>
+                  <small>
+                    <p>{{respuestas.cuantitativo}}</p>
+                  </small> -->
+                  </div>
+                </div>
+                <!--<input class="form-check-input" type="checkbox" value="" id="">
+              <p>
+                {{respuestas.Descripcion}}
+              </p>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div [@animacionPreg]='cambio' *ngIf='filterPreguntas.length == pagePregunta' class="enviar-1">
+        <button type="button" (click)="enviarResp();" class="btn btn-success enviar">Enviar</button>
+      </div>
+      <div class="foot">
+        <!--<ngb-pagination [(page)]="cpage" [pageSize]="cpageSize" [collectionSize]="totalLengthOfCollection">
+        </ngb-pagination>-->
+        <!-- <ngb-pagination [collectionSize]="filterPreguntas.length" [(page)]="pagePregunta" [pageSize]="pageSizePregunta"
+          (click)="cambioPag2()">
+          <ng-template ngbPaginationPages let-page let-pages="pages" (click)="cambioPag2()">
+          </ng-template>
+        </ngb-pagination> -->
+        <div class="pagination">
+          <div class="pagination-previous">
+            <button (click)="previous()"><i class="fas fa-angle-left"></i></button>
+          </div>
+          <div class="pagination-next">
+            <button (click)="next()"><i class="fas fa-angle-right"></i></button>
+          </div>
+        </div>
+        <div class="pages">
+          <div>
+            <input type="text" class="form-control text-s" [(ngModel)]='pagePregunta' id='pag' (click)="backText();"
+              readonly>
+            <input type="number" min="1" max="filterPreguntas.length" class="form-control text-s" [(ngModel)]="pagText"
+              id="pagText" (change)="cambioPag()" (keyup.enter)="cambioPag()" hidden>
+          </div>
+          <div class="de">
+            <p> de </p>
+          </div>
+          <div>
+            <input type="text" class="form-control text-xs" type="text" [(value)]='filterPreguntas.length' readonly>
+          </div>
+        </div>
+      </div>
+
+      <!--<select class="custom-select" style="width: auto" [(ngModel)]="pageSizePregunta">
+          <option [ngValue]="1">1 items per page</option>
+          <option [ngValue]="2">2 items per page</option>
+          <option [ngValue]="5">5 items per page</option>
+        </select> <br>-->
+    </div>
+  </div>
+
+</ng-template>
+<!-- REPORTES MOVILES -->
+<ng-template #reportesMovil let-modal>
+
+  <div class="modal-header">
+
+    <h5 class="modal-title" id="editUserLabel">Reportes</h5>
+
+    <button type="button" class="close" (click)="closeBtnClick()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+  </div>
+
+  <div class="modal-body">
+    <div class="card" *ngIf='evaluadosReporte.length == 0'>
+      <div class="text-center">
+        <div class="spinner-border text-primary2" style="width: 5rem; height: 5rem;" role="status"></div>
+        <div style="font-size: 2rem;">
+          Cargando...
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf='evaluadosReporte.length != 0'>
+      <!-- <div [@animacionPreg]='cambio' class="text-center cuerpoBody" role="alert"
+        *ngFor='let preguntas of filterPreguntas | slice: (pagePregunta-1) * pageSizePregunta : (pagePregunta-1) * pageSizePregunta + pageSizePregunta;'> -->
+      <div class="text-center cuerpoBody" role="alert">
+        <div class="row">
+          <div class="reporteMovil">
+            <div class="">
+              <span class="text-info display-6">
+                <i class="far fa-clipboard"></i>
+              </span>
+            </div>
+            <div>
+              <h5>Resumido</h5>
+            </div>
+          </div>
+          <div class="reporteMovil">
+            <div class="">
+              <span class="text-info display-6">
+                <i class="far fa-clipboard"></i>
+              </span>
+            </div>
+            <div>
+              <h6>Consolidado</h6>
+            </div>
+          </div>
+          <div class="reporteMovil">
+            <div class="">
+              <span class="text-info display-6">
+                <i class="far fa-clipboard"></i>
+              </span>
+            </div>
+            <div>
+              <h6>Evaluador</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<select class="custom-select" style="width: auto" [(ngModel)]="pageSizePregunta">
+          <option [ngValue]="1">1 items per page</option>
+          <option [ngValue]="2">2 items per page</option>
+          <option [ngValue]="5">5 items per page</option>
+        </select> <br>-->
+    </div>
+  </div>
+
+</ng-template>
